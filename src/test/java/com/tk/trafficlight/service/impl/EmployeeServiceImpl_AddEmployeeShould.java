@@ -2,7 +2,6 @@ package com.tk.trafficlight.service.impl;
 
 
 import com.tk.trafficlight.data.EmployeeBuilder;
-import com.tk.trafficlight.domain.Employee;
 import com.tk.trafficlight.repository.EmployeeRepository;
 import org.junit.jupiter.api.Assertions;
 import org.junit.jupiter.api.BeforeEach;
@@ -24,20 +23,20 @@ class EmployeeServiceImpl_AddEmployeeShould {
     EmployeeRepository employeeRepository;
 
     @BeforeEach
-    public void init() {
+    void init() {
         MockitoAnnotations.initMocks(this);
     }
 
     @Test
     void failWhenPassedAnInvalidEmployee() {
-        Assertions.assertThrows(RuntimeException.class, () -> {
-            employeeService.addEmployee(EmployeeBuilder.buildInvalidEmployee());
-        });
+        Assertions.assertThrows(RuntimeException.class, () ->
+            employeeService.addEmployee(EmployeeBuilder.buildInvalidEmployee())
+        );
     }
 
     @Test
     void workWhenPassedAValidEmployee() {
-        Employee employee = EmployeeBuilder.buildValidEmployee();
+        var employee = EmployeeBuilder.buildValidEmployee();
 
         employeeService.addEmployee(employee);
         verify(employeeRepository, times(1)).save(employee);
